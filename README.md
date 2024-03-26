@@ -1,6 +1,6 @@
 # Edutask: a Training System for PA1417
 
-## Group 2
+### Group 2
 * Jesper Yli-Hukka
 * Elena Moser
 
