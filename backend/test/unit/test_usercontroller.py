@@ -12,8 +12,8 @@ def sut(users: list):
     return sut
 
 @pytest.mark.unit
-@pytest.mark.parametrize('users, email, expected',[([{"email": "jane@doe.com"}], "Jane@doe.com", {"email": "jane@doe.com"}),
-([{"email": "jane@doe.com", "Name": "Jane1"}, {"email": "jane@doe.com", "Name": "Jane2"}], "Jane@doe.com", {"email": "jane@doe.com", "Name": "Jane1"})
+@pytest.mark.parametrize('users, email, expected',[([{"email": "jane@doe.com"}], "jane@doe.com", {"email": "jane@doe.com"}),
+([{"email": "jane@doe.com", "Name": "Jane1"}, {"email": "jane@doe.com", "Name": "Jane2"}], "jane@doe.com", {"email": "jane@doe.com", "Name": "Jane1"})
 ])
 def test_getUserByEmail(sut, email, expected):
     # one user, more than one user
@@ -28,12 +28,19 @@ def test_invalid_email(sut):
     with pytest.raises(ValueError):
         sut.get_user_by_email(email)
 
+@pytest.mark.unit
+@pytest.mark.parametrize('users',[[{"email": "jane@doe.com", "Name": "Jane1"}, {"email": "jane@doe.com", "Name": "Jane2"}]])
+def test_invalid_email(sut, capsys):
+    email = "jane@doe.com"
+    sut.get_user_by_email(email)
+    capture = capsys.readouterr()
+    assert capture.out == "Error: more than one user found with mail jane@doe.com\n"
 
 @pytest.mark.unit
 @pytest.mark.parametrize('users',[[]])
 def test_valid_email_no_user(sut):
     # no user should return None but give IndexError at the moment.
-    email = "Jane@doe.com"
+    email = "jane@doe.com"
     result = sut.get_user_by_email(email)
     assert result == None
 
@@ -41,7 +48,7 @@ def test_valid_email_no_user(sut):
 @pytest.mark.unit
 @pytest.mark.parametrize('users',[Exception])
 def test_valid_email_db_fail(sut):
-    email = "Jane@doe.com"
+    email = "jane@doe.com"
 
     with pytest.raises(Exception):
         sut.get_user_by_email(email)
