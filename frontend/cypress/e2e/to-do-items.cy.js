@@ -22,7 +22,7 @@ describe('Test todo item', () => {
         })
 
         //Add a fabricated task to the user from a fixture
-        cy.fixture('task.json')
+        cy.fixture('userTask.json')
         .then((task) => {
             cy.request({
                 method: 'POST',
