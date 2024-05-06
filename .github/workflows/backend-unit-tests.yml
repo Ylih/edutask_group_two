@@ -26,9 +26,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.pip
 
       - name: Run Unit Tests
         run: |
-          python3 -m pytest -m unit
+          python -m pytest -m unit
