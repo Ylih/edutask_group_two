@@ -1,0 +1,34 @@
+name: Backend Unit Tests
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./backend
+
+jobs:
+  unittests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.pip
+
+      - name: Run Unit Tests
+        run: |
+          python3 -m pytest -m unit
